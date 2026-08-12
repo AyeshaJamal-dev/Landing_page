@@ -5,24 +5,20 @@ import Footer from "../components/footer.jsx";
 import Hero from "../components/hero.jsx";
 import Achievements from "../components/achievements.jsx";
 import About from "../components/about.jsx";
-
-
-
-function Home(){
-    return(
+import Services from "../components/services.jsx";
+function Home() {
+    return (
         <>
-         <Navbar />
-         <Hero/>
-         <Features/>
-         <About />
-          <Achievements />
-          <Contact />
-           
-            <Footer/>
-             
-             
-               
+            <Navbar />
+            <Hero />
+            <Features />
+            <Services />
+            <About />
+            <Achievements />
+            <Contact />
+            <Footer />
         </>
-    )
+    );
 }
+
 export default Home;

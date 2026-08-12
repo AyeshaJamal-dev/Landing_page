@@ -1,81 +1,160 @@
-function Features(){
+import { useState, useEffect } from "react";
 
-    return(
+function Features() {
+
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+
+        fetch("https://jsonplaceholder.typicode.com/posts")
+
+            .then((response) => {
+
+                if (!response.ok) {
+                    throw new Error("Failed to fetch features");
+                }
+
+                return response.json();
+
+            })
+
+            .then((data) => {
+
+                setData(data);
+                setLoading(false);
+
+            })
+
+            .catch((error) => {
+
+                setError(error.message);
+                setLoading(false);
+
+            });
+
+    }, []);
+
+
+    return (
+
         <section className="bg-gray-100 py-20">
 
             <div className="max-w-7xl mx-auto px-6">
 
-                <h1 className="text-2xl font-bold text-center">
-                    Why choose Us
-                </h1>
 
-                <p className="text-center text-gray-600 mt-4">
-                    Everything you need to build beautiful websites faster.
-                </p>
+                {/* Section Heading */}
+
+                <div className="max-w-2xl mx-auto text-center">
+
+                    <p className="text-sm font-semibold uppercase tracking-widest text-blue-600">
+                        Our Features
+                    </p>
+
+                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-3">
+                        Everything you need to build better websites
+                    </h2>
+
+                    <p className="text-gray-600 mt-4">
+                        Discover powerful features designed to make your
+                        development experience faster, easier, and better.
+                    </p>
+
+                </div>
 
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-12 gap-8">
+                {/* Features Cards */}
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
 
 
-                    <div className="bg-white p-8 rounded-xl shadow-lg">
+                    {/* Loading State */}
 
-                        <div className="text-3xl md:text-5xl">
-                            ⚡
-                        </div>
+                    {loading && (
 
-                        <h3 className="text-2xl font-bold mt-4">
-                            Fast
-                        </h3>
-
-                        <p className="mt-3 text-gray-600">
-                            Build websites quickly using utility classes instead of writing custom CSS.
+                        <p className="text-center text-gray-600 col-span-full">
+                            Loading features...
                         </p>
 
-                    </div>
+                    )}
 
 
+                    {/* Error State */}
 
-                    <div className="bg-white p-8 rounded-xl shadow-lg">
+                    {!loading && error && (
 
-                        <div className="text-3xl md:text-5xl">
-                            📱
-                        </div>
-
-                        <h3 className="text-2xl font-bold mt-4">
-                            Responsive
-                        </h3>
-
-                        <p className="mt-3 text-gray-600">
-                            Create layouts that work beautifully on desktop, tablet, and mobile devices.
+                        <p className="text-center text-red-600 col-span-full">
+                            Something went wrong: {error}
                         </p>
 
-                    </div>
+                    )}
 
 
+                    {/* API Data */}
 
-                    <div className="bg-white p-8 rounded-xl shadow-lg">
+                    {!loading && !error && (
 
-                        <div className="text-3xl md:text-5xl">
-                            🔒
-                        </div>
+                        data.slice(0, 3).map((item, index) => (
 
-                        <h3 className="text-2xl font-bold mt-4">
-                            Secure
-                        </h3>
+                            <div
+                                key={item.id}
+                                className="group bg-white p-8 rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
+                            >
 
-                        <p className="mt-3 text-gray-600">
-                            Follow modern web standards to build reliable and maintainable websites.
-                        </p>
 
-                    </div>
+                                {/* Top Row */}
 
+                                <div className="flex items-center justify-between">
+
+                                    <span className="text-sm font-semibold text-blue-600">
+                                        0{index + 1}
+                                    </span>
+
+                                    <span className="text-2xl text-gray-300 group-hover:text-blue-600 transition-colors duration-300">
+                                        →
+                                    </span>
+
+                                </div>
+
+
+                                {/* Title */}
+
+                                <h3 className="text-xl font-bold text-gray-900 mt-8 capitalize">
+                                    {item.title}
+                                </h3>
+
+
+                                {/* Description */}
+
+                                <p className="text-gray-600 leading-7 mt-4">
+                                    {item.body}
+                                </p>
+
+
+                                {/* Bottom Link */}
+
+                                <div className="mt-8">
+
+                                    <span className="text-sm font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
+                                        Learn more →
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        ))
+
+                    )}
 
                 </div>
 
             </div>
 
         </section>
-    )
+
+    );
 }
 
 export default Features;

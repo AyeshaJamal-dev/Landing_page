@@ -20,7 +20,7 @@ path="/contact"
 element={<ContactPage />}
 />
 <Route
-path="/service/:serviceName"
+path="/service/:id"
 element={<ServicePage />} />
 
    </Routes>
